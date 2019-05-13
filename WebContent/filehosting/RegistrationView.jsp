@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -34,6 +35,26 @@
 				</div>
 				<input class="btn btn-primary" type="submit" name="submitBtn" value="Register">
 			</form>
+			<c:if test="${not empty param.error}">
+			   <div class="card mx-auto my-3" style="width: 30rem;">
+				   <div class="card-header text-white bg-danger">
+					   An error has occurred.
+				   </div>
+				   <div class="card-body">
+					   <code>
+			               <c:if test="${param.error == 'username'}">
+			                   There is already an account under this username.
+			               </c:if>
+			               <c:if test="${param.error == 'password'}">
+			                   Passwords do not match.
+			               </c:if>
+			               <c:if test="${param.error == 'email'}">
+			                   There is already an account under this email.
+			               </c:if>
+					   </code>
+				   </div>
+			   </div>
+			</c:if>
 		</div>
 	</div>
 </div>
