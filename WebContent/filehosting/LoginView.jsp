@@ -15,7 +15,7 @@
 	</div>
 	<div class="row mt-3">
 	    <div class="col">
-			<form class="mx-auto" style="width: 30rem;" action="RomanNumerals.jsp" method="post">
+			<form class="mx-auto" style="width: 30rem;" action="LoginController" method="post">
 				<div class="form-group">
 					<label for="username">Username</label>
 					<input class="form-control" id="username" name="username">
@@ -26,7 +26,15 @@
 				</div>
 					<input class="btn btn-primary" type="submit" name="submitBtn" value="Log-in">
 			</form>
-	        <hr class="my-4" style="width: 40rem;">
+	    </div>
+	</div>
+	<hr class="my-4" style="width: 40rem;">
+	<div class="row mt-3">
+	    <div class="col">
+	        <p class="mx-auto" style="width: 30rem;">
+	            Don't have an account yet?
+	            <a href="RegistrationView.jsp">Register</a>
+	        </p>
 	    </div>
 	</div>
 </div>
