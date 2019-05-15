@@ -44,7 +44,7 @@
 	    <div class="col">
 	        <p class="mx-auto" style="width: 30rem;">
 	            Don't have an account yet?
-	            <a href="RegistrationView.jsp">Register</a>
+	            <a href="Register">Register</a>
 	        </p>
 	    </div>
 	</div>

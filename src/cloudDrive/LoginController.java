@@ -1,4 +1,4 @@
-package filehosting;
+package cloudDrive;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -29,7 +29,7 @@ public class LoginController extends HttpServlet {
     }
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("/filehosting/LoginView.jsp").forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/cloudDrive/LoginView.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
