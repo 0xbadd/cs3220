@@ -19,12 +19,12 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
-@WebServlet("/UploadController")
+@WebServlet("/CloudDrive/Upload")
 public class UploadController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.sendRedirect("FileListController");
+		response.sendRedirect("FileList");
 	}
 	
 	public void addBackslash(String path) {

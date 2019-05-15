@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/DownloadController")
+@WebServlet("/CloudDrive/Download")
 public class DownloadController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

@@ -8,8 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/FileListController")
-
+@WebServlet("/CloudDrive/FileList")
 public class FileListController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 

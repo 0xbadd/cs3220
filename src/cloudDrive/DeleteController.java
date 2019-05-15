@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/DeleteController")
+@WebServlet("/CloudDrive/Delete")
 public class DeleteController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
  
@@ -40,7 +40,7 @@ public class DeleteController extends HttpServlet {
 			throw new IOException( e );
 		}
 		
-		response.sendRedirect("FileListController");
+		response.sendRedirect("FileList");
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -24,7 +24,7 @@
 	<div class="container">
 		<h1>Welcome</h1>
 
-		<form action="UploadController" method="post" enctype="multipart/form-data">
+		<form action="Upload" method="post" enctype="multipart/form-data">
 			File: <input type="file" name="file" /> <input type="submit"
 				name="upload" value="Upload" />
 		</form>
@@ -37,8 +37,8 @@
 			
 			<c:forEach items="${files.rows}" var="row">
 				<div class="card">
-					<div class="card-header"><c:out value = "${row.File_Name}"/> <a href="DeleteController?id=${row.id}" class="float-right">Delete</a></div>
-					<div class="card-body"><a href="DownloadController?path=${row.File_Path}">Download</a><a href="RenameController?id=${row.id}" class="float-right">Rename</a></div>
+					<div class="card-header"><c:out value = "${row.File_Name}"/> <a href="Delete?id=${row.id}" class="float-right">Delete</a></div>
+					<div class="card-body"><a href="Download?path=${row.File_Path}">Download</a><a href="Rename?id=${row.id}" class="float-right">Rename</a></div>
 				</div>
 			</c:forEach> 
 			
