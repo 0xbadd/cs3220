@@ -68,7 +68,7 @@ public class LoginController extends HttpServlet {
 			request.getSession().setAttribute("user", username);
 			response.sendRedirect("FileList");
 		} else {
-			request.getSession().setAttribute("error", "username");
+			request.getSession().setAttribute("error", "login");
 			doGet(request, response);
 		}
 	}

@@ -27,20 +27,13 @@
 				</div>
 				<input class="btn btn-primary" type="submit" name="submitBtn" value="Log-in">
 			</form>
-			<c:if test="${not empty error}">
+			<c:if test="${error == 'login'}">
 			   <div class="card mx-auto my-3" style="width: 30rem;">
 				   <div class="card-header text-white bg-danger">
 					   An error has occurred.
 				   </div>
 				   <div class="card-body">
-					   <code>
-			               <c:if test="${error == 'username'}">
-			                   There is no account under this username.
-			               </c:if>
-			               <c:if test="${error == 'password'}">
-			                   Password is incorrect.
-			               </c:if>
-					   </code>
+					   <code>Username or password is incorrect.</code>
 				   </div>
 			   </div>
 			</c:if>
