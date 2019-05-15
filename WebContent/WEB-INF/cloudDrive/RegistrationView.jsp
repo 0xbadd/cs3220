@@ -16,7 +16,7 @@
 	</div>
 	<div class="row mt-3">
 	    <div class="col">
-			<form class="mx-auto my-3" style="width: 30rem;" action="RegistrationController" method="post">
+			<form class="mx-auto my-3" style="width: 30rem;" action="Register" method="post">
 				<div class="form-group">
 					<label for="username">Username</label>
 					<input class="form-control" id="username" name="username">
@@ -35,20 +35,20 @@
 				</div>
 				<input class="btn btn-primary" type="submit" name="submitBtn" value="Register">
 			</form>
-			<c:if test="${not empty param.error}">
+			<c:if test="${not empty error}">
 			   <div class="card mx-auto my-3" style="width: 30rem;">
 				   <div class="card-header text-white bg-danger">
 					   An error has occurred.
 				   </div>
 				   <div class="card-body">
 					   <code>
-			               <c:if test="${param.error == 'username'}">
+			               <c:if test="${error == 'username'}">
 			                   There is already an account under this username.
 			               </c:if>
-			               <c:if test="${param.error == 'password'}">
+			               <c:if test="${error == 'password'}">
 			                   Passwords do not match.
 			               </c:if>
-			               <c:if test="${param.error == 'email'}">
+			               <c:if test="${error == 'email'}">
 			                   There is already an account under this email.
 			               </c:if>
 					   </code>
