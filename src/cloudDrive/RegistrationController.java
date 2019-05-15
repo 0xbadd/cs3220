@@ -36,6 +36,10 @@ public class RegistrationController extends HttpServlet {
 			request.getSession().setAttribute("error", "password");
 		}
 		
+		if (username == "" || email == "" || password == "") {
+			isValid = false;
+		}
+		
 		try {
 			String url = "jdbc:mysql://cs3.calstatela.edu/cs3220stu77";
 			String dbUsername = "cs3220stu77";
