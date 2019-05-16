@@ -1,10 +1,12 @@
 package cloudDrive;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -32,18 +34,29 @@ public class RenameController extends HttpServlet {
 		Connection c = null;
 
 		try {
-			String url = "jdbc:mysql://cs3.calstatela.edu/cs3220stu83";
-			String username = "cs3220stu83";
-			String password = "ZsZ85.kr";
+			String url = "jdbc:mysql://cs3.calstatela.edu/cs3220stu77";
+			String dbUsername = "cs3220stu77";
+			String dbPassword = "M**XK2EH";
+			
+			c = DriverManager.getConnection(url, dbUsername, dbPassword);
 
-			c = DriverManager.getConnection(url, username, password);
-
-			String sql = "UPDATE files SET File_Name=? WHERE id=?";
+			String fileDir = getServletContext().getRealPath("/WEB-INF/uploads");
+			String path = (new File(fileDir, newName)).getAbsolutePath();
+			String sql = "UPDATE files SET filename=?, filepath=? WHERE id=?";
 			PreparedStatement pstmt = c.prepareStatement(sql);
 			pstmt.setString(1, newName);
-			pstmt.setString(2, id);
+			pstmt.setString(2, path);
+			pstmt.setString(3, id);
 
 			pstmt.executeUpdate();
+
+			@SuppressWarnings("unchecked")
+			Map<Integer, FileEntryBean> files = (Map<Integer, FileEntryBean>) request.getSession().getAttribute("files");
+			String filepath = files.get(Integer.parseInt(id)).getFilepath();
+			File file = new File(filepath);
+			
+			File file2 = new File(fileDir, newName);
+			file.renameTo(file2);
 		} catch(SQLException e) {
 			throw new ServletException(e);
 		} finally {

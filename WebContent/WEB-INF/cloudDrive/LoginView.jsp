@@ -18,7 +18,7 @@
 	    <div class="col">
 			<form class="mx-auto" style="width: 30rem;" action="Login" method="post">
 				<div class="form-group">
-					<label for="username">Username</label>
+					<label for="username">User name</label>
 					<input class="form-control" id="username" name="username">
 				</div>
 				<div class="form-group">
@@ -33,7 +33,7 @@
 					   An error has occurred.
 				   </div>
 				   <div class="card-body">
-					   <code>Username or password is incorrect.</code>
+					   <code>User name or password is incorrect.</code>
 				   </div>
 			   </div>
 			</c:if>

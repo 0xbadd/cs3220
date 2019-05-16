@@ -6,8 +6,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,29 +20,28 @@ public class FileListController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		List<FileEntryBean> files = new ArrayList<>();
-		String userid = (String) request.getAttribute("userid");
+		Map<Integer, FileEntryBean> files = new LinkedHashMap<>();
+		int userid = (int) request.getSession().getAttribute("userid");
 		Connection c = null;
 		
 		try {
-			String url = "jdbc:mysql://cs3.calstatela.edu/cs3220stu83";
-			String dbUsername = "cs3220stu83";
-			String dbPassword = "ZsZ85.kr";
+			String url = "jdbc:mysql://cs3.calstatela.edu/cs3220stu77";
+			String dbUsername = "cs3220stu77";
+			String dbPassword = "M**XK2EH";
 			
 			c = DriverManager.getConnection(url, dbUsername, dbPassword);
-			String sql = "SELECT * FROM files WHERE User_id=?";
+			String sql = "SELECT * FROM files WHERE userid=?";
 			PreparedStatement ps = c.prepareStatement(sql);
-			ps.setString(1, userid);
+			ps.setInt(1, userid);
 			ResultSet rs = ps.executeQuery();
 			
 			while (rs.next()) {
 				FileEntryBean file = new FileEntryBean(
-						rs.getInt("id"),
-						rs.getString("File_name"),
-						rs.getString("File_Path"),
-						rs.getInt("User_id")
+						rs.getString("filename"),
+						rs.getString("filepath"),
+						rs.getInt("userid")
 				);
-				files.add(file);
+				files.put(rs.getInt("id"), file);
 			}
 		} catch (SQLException e) {
 			throw new ServletException(e);

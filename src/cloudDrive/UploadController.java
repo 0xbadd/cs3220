@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.io.FilenameUtils;
 
 @WebServlet("/CloudDrive/Upload")
 public class UploadController extends HttpServlet {
@@ -28,38 +29,37 @@ public class UploadController extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Connection c = null;
 		DiskFileItemFactory factory = new DiskFileItemFactory();
 		ServletContext servletContext = this.getServletConfig().getServletContext();
 		File repository = (File) servletContext.getAttribute("javax.servlet.context.tempdir");
 		ServletFileUpload upload = new ServletFileUpload(factory);
 		String fileDir = getServletContext().getRealPath("/WEB-INF/uploads");
 		
-		String userid = (String) request.getAttribute("userid");
+		int userid = (int) request.getSession().getAttribute("userid");
 
 		factory.setRepository(repository);
 		
+		Connection c = null;
 		try {
-			String url = "jdbc:mysql://cs3.calstatela.edu/cs3220stu83";
-			String username = "cs3220stu83";
-			String password = "ZsZ85.kr";
-
-			c = DriverManager.getConnection(url, username, password);
+			String url = "jdbc:mysql://cs3.calstatela.edu/cs3220stu77";
+			String dbUsername = "cs3220stu77";
+			String dbPassword = "M**XK2EH";
+			
+			c = DriverManager.getConnection(url, dbUsername, dbPassword);
 			try {
 				List<FileItem> items = upload.parseRequest(request);
 
 				for(FileItem item : items) {
 					if(!item.isFormField()) {
-						String fileName = (new File(item.getName())).getName();
+						String fileName = FilenameUtils.getName(item.getName());
 						File file = new File(fileDir, fileName);
-						String path = "WEB-INF\\\\uploads\\\\" + fileName;
 						item.write(file);
 						
-						String sql = "INSERT INTO files (File_Name, File_Path, User_id) VALUES (?, ?, ?)";
+						String sql = "INSERT INTO files (filename, filepath, userid) VALUES (?, ?, ?)";
 						PreparedStatement pstmt = c.prepareStatement(sql);
 						pstmt.setString(1, fileName);
-						pstmt.setString(2, path);
-						pstmt.setString(3, userid);
+						pstmt.setString(2, file.getAbsolutePath());
+						pstmt.setInt(3, userid);
 						
 						pstmt.executeUpdate();
 					}
@@ -81,20 +81,4 @@ public class UploadController extends HttpServlet {
 		
 		doGet(request, response);
 	}
-
-	public void addBackslash(String path) {
-		String[] arrOfStrings = path.split("\\");
-		String newString = "";
-		int count = 0;
-
-		for(String str: arrOfStrings) {
-			newString.concat(str);
-			if(count < arrOfStrings.length - 1) {
-				newString.concat("\\\\");
-			}
-		}
-		
-		path = newString;
-	}
-
 }
