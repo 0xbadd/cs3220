@@ -2,8 +2,6 @@ package cloudDrive;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -83,20 +81,4 @@ public class UploadController extends HttpServlet {
 		
 		doGet(request, response);
 	}
-
-	private String addBackslash(String path) {
-		String[] arrOfStrings = path.split("\\");
-		String newString = "";
-		int count = 0;
-
-		for(String str: arrOfStrings) {
-			newString.concat(str);
-			if(count < arrOfStrings.length - 1) {
-				newString.concat("\\\\");
-			}
-		}
-		
-		return newString;
-	}
-
 }
