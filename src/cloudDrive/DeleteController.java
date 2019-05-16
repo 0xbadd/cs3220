@@ -12,15 +12,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/DeleteController")
+@WebServlet("/CloudDrive/Delete")
 public class DeleteController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
  
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ServletContext context = getServletContext();
-		
 		int id = Integer.parseInt(request.getParameter("id"));
-		
 		Connection c = null;
 		
 		try {
@@ -28,19 +25,17 @@ public class DeleteController extends HttpServlet {
 			String username = "cs3220stu83";
 			String password = "ZsZ85.kr";
 
-			c = DriverManager.getConnection( url, username, password );
+			c = DriverManager.getConnection(url, username, password);
 			
 			String sql = "DELETE FROM files WHERE id=" + id;
-			System.out.println("Query: " + sql);
 
 			PreparedStatement pstmt = c.prepareStatement(sql);
-			int numberOfRowsAffected = pstmt.executeUpdate();
-		}
-		catch( Exception e ) {
-			throw new IOException( e );
+			pstmt.executeUpdate();
+		} catch(Exception e) {
+			throw new IOException(e);
 		}
 		
-		response.sendRedirect("FileListController");
+		response.sendRedirect("FileList");
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
