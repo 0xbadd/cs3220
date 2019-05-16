@@ -18,7 +18,7 @@
 	    <div class="col">
 			<form class="mx-auto my-3" style="width: 30rem;" action="Register" method="post">
 				<div class="form-group">
-					<label for="username">Username</label>
+					<label for="username">User name</label>
 					<input class="form-control" id="username" name="username">
 				</div>
 				<div class="form-group">
