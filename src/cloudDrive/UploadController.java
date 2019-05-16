@@ -65,6 +65,14 @@ public class UploadController extends HttpServlet {
 			}            
 		} catch(SQLException e){
 			throw new ServletException(e);
+		} finally {
+			try {
+				if (c != null) {
+					c.close();
+				}
+			} catch (SQLException e) {
+				throw new ServletException(e);
+			}
 		}
 		
 		doGet(request, response);

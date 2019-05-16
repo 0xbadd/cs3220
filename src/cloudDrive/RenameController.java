@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -39,8 +40,16 @@ public class RenameController extends HttpServlet {
 
 				PreparedStatement pstmt = c.prepareStatement(sql);
 				pstmt.executeUpdate();
-			} catch(Exception e) {
-				throw new IOException(e);
+			} catch(SQLException e) {
+				throw new ServletException(e);
+			} finally {
+				try {
+					if (c != null) {
+						c.close();
+					}
+				} catch (SQLException e) {
+					throw new ServletException(e);
+				}
 			}
 
 			response.sendRedirect("FileList");
