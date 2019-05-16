@@ -20,26 +20,32 @@ public class DownloadController extends HttpServlet {
 		
 		@SuppressWarnings("unchecked")
 		Map<Integer, FileEntryBean> files = (Map<Integer, FileEntryBean>) request.getSession().getAttribute("files");
-		String filepath = files.get(Integer.parseInt(id)).getFilepath();
-		String filename = files.get(Integer.parseInt(id)).getFilename();
 
-		response.setContentType("application/octet-stream");
-		response.setHeader("Content-Disposition", "attachment;filename=" + filename);
+		if (files.get(Integer.parseInt(id)) != null) {
+			String filepath = files.get(Integer.parseInt(id)).getFilepath();
+			String filename = files.get(Integer.parseInt(id)).getFilename();
 
-        FileInputStream in = new FileInputStream(filepath);
-        OutputStream out = response.getOutputStream();
-        byte[] buffer = new byte[4096];
-        int read;
-        
-        while((read = in.read(buffer, 0, 4096)) > 0) {
-            out.write(buffer, 0, read);
-        }
+			response.setContentType("application/octet-stream");
+			response.setHeader("Content-Disposition", "attachment;filename=" + filename);
 
-        in.close();
-        out.flush();
-        out.close();
-        
-		response.sendRedirect("FileList");
+			FileInputStream in = new FileInputStream(filepath);
+			OutputStream out = response.getOutputStream();
+			byte[] buffer = new byte[4096];
+			int read;
+			
+			while((read = in.read(buffer, 0, 4096)) > 0) {
+				out.write(buffer, 0, read);
+			}
+
+			in.close();
+			out.flush();
+			out.close();
+			
+			response.sendRedirect("FileList");
+		} else {
+			request.getSession().setAttribute("error", "share");
+			response.sendRedirect("Login");
+		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

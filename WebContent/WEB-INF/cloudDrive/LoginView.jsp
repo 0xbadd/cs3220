@@ -14,15 +14,21 @@
 	<div class="page-header my-4 mx-auto" style="width: 40rem;">
 		<h1 class="display-4 text-center">Cloud Drive Login</h1>
 	</div>
-	<c:if test="${error == 'login'}">
+	<c:if test="${not empty error}">
 	   <div class="card mx-auto my-3" style="width: 30rem;">
 		   <div class="card-header text-white bg-danger">
 			   An error has occurred.
 		   </div>
 		   <div class="card-body">
-			   <code>User name or password is incorrect.</code>
+		       <c:if test="${error == 'login'}">
+			      <code>User name or password is incorrect.</code>
+		       </c:if>
+		       <c:if test="${error == 'share'}">
+			      <code>The file you are trying to download does not exist.</code>
+		       </c:if>
 		   </div>
 	   </div>
+	   <c:set var="error" scope="session" value=""/>
 	</c:if>
 	<div class="row mt-3">
 	    <div class="col">

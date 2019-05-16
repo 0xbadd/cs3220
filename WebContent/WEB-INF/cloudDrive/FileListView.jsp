@@ -42,6 +42,15 @@
 					<input type="submit" value="Submit">
 				</form>
 			</c:if>
+			
+			<c:if test="${not empty share}">
+			     <div class="my-3 mx-auto text-center">
+			         <h3>
+			             Share Link: ${sharelink}
+			         </h3>
+			     </div>
+			     <c:set var="share" scope="session" value=""/>
+			</c:if>
 
 		    <hr class="my-4" style="width: 40rem;">
 
@@ -59,7 +68,7 @@
 					<div class="card-body text-center">
 						<span class="mx-4">
 							<a href="FileList?id=${file.key}&name=${file.value.filename}">
-								<i class="fas fa-edit fa-lg float-left" style="color:black"></i>
+								<i class="fas fa-edit fa-lg" style="color:black"></i>
 							</a>
 						</span>
 						<span class="mx-4">
@@ -68,8 +77,13 @@
 							</a>
 						</span>
 						<span class="mx-4">
+							<a href="Share?id=${file.key}">
+								<i class="fas fa-share-square fa-lg" style="color:black"></i>
+							</a>
+						</span>
+						<span class="mx-4">
 							<a href="Delete?id=${file.key}" style="color:black">
-								<i class="fas fa-trash fa-lg float-right"></i>
+								<i class="fas fa-trash fa-lg"></i>
 							</a>
 						</span>
 					</div>
