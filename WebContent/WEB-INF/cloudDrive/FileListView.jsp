@@ -17,6 +17,17 @@
     </div>
     <div class="row mt-3">
         <div class="col">
+			<c:if test="${error == 'duplicate'}">
+			   <div class="card mx-auto my-3" style="width: 30rem;">
+				   <div class="card-header text-white bg-danger">
+					   An error has occurred.
+				   </div>
+				   <div class="card-body">
+					   <code>Uploaded file already exists.</code>
+				   </div>
+			   </div>
+			</c:if>
+
 			<form class="my-3 mx-auto text-center" action="Upload" method="post" enctype="multipart/form-data">
 				File:
 				<input type="file" name="file"/>

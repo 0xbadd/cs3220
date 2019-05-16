@@ -94,6 +94,7 @@ public class UploadController extends HttpServlet {
 		}
 
 		if (isValid) {
+			request.getSession().setAttribute("error", "");
 			doGet(request, response);
 		} else {
 			request.getSession().setAttribute("error", "duplicate");
