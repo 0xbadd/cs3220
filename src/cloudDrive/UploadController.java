@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -34,6 +35,7 @@ public class UploadController extends HttpServlet {
 		File repository = (File) servletContext.getAttribute("javax.servlet.context.tempdir");
 		ServletFileUpload upload = new ServletFileUpload(factory);
 		String fileDir = getServletContext().getRealPath("/WEB-INF/uploads");
+		boolean isValid = true;
 		
 		int userid = (int) request.getSession().getAttribute("userid");
 
@@ -53,15 +55,27 @@ public class UploadController extends HttpServlet {
 					if(!item.isFormField()) {
 						String fileName = FilenameUtils.getName(item.getName());
 						File file = new File(fileDir, fileName);
-						item.write(file);
-						
-						String sql = "INSERT INTO files (filename, filepath, userid) VALUES (?, ?, ?)";
+						String filepath = file.getAbsolutePath();
+
+						String sql = "SELECT * FROM files WHERE filepath=?";
 						PreparedStatement pstmt = c.prepareStatement(sql);
-						pstmt.setString(1, fileName);
-						pstmt.setString(2, file.getAbsolutePath());
-						pstmt.setInt(3, userid);
+						pstmt.setString(1, filepath);
+						ResultSet rs = pstmt.executeQuery();
 						
-						pstmt.executeUpdate();
+						if (rs.next()) {
+							isValid = false;
+						} else {
+							item.write(file);
+							
+							sql = "INSERT INTO files (filename, filepath, userid) VALUES (?, ?, ?)";
+							pstmt = c.prepareStatement(sql);
+							pstmt.setString(1, fileName);
+							pstmt.setString(2, filepath);
+							pstmt.setInt(3, userid);
+							
+							pstmt.executeUpdate();
+						}
+
 					}
 				}
 			} catch(Exception e) {
@@ -78,7 +92,14 @@ public class UploadController extends HttpServlet {
 				throw new ServletException(e);
 			}
 		}
+
+		if (isValid) {
+			request.getSession().setAttribute("error", "");
+			doGet(request, response);
+		} else {
+			request.getSession().setAttribute("error", "duplicate");
+			response.sendRedirect("FileList");
+		}
 		
-		doGet(request, response);
 	}
 }
