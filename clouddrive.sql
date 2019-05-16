@@ -1,4 +1,5 @@
 drop table if exists users;
+drop table if exists files;
 
 CREATE TABLE `users` (
   `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -9,3 +10,10 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`username`, `email`, `password`)
 VALUES ('albert', ' Albert.Cervantes16@calstatela.edu ', 'abcd');
+
+CREATE TABLE `files` (
+  `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `filename` varchar(50) NOT NULL,
+  `filepath` varchar(50) NOT NULL,
+  `userid` int NOT NULL
+) ENGINE='InnoDB';
