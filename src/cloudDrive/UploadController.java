@@ -34,6 +34,8 @@ public class UploadController extends HttpServlet {
 		File repository = (File) servletContext.getAttribute("javax.servlet.context.tempdir");
 		ServletFileUpload upload = new ServletFileUpload(factory);
 		String fileDir = getServletContext().getRealPath("/WEB-INF/uploads");
+		
+		String userid = (String) request.getAttribute("userid");
 
 		factory.setRepository(repository);
 		
@@ -53,10 +55,12 @@ public class UploadController extends HttpServlet {
 						String path = "WEB-INF\\\\uploads\\\\" + fileName;
 						item.write(file);
 						
-						String sql = "INSERT INTO files (File_Name, File_Path, User_id) VALUES (\"" + fileName + "\", \""  + path + "\", "+ 1 + ")";
-						System.out.println("Query: " + sql);
-
+						String sql = "INSERT INTO files (File_Name, File_Path, User_id) VALUES (?, ?, ?)";
 						PreparedStatement pstmt = c.prepareStatement(sql);
+						pstmt.setString(1, fileName);
+						pstmt.setString(2, path);
+						pstmt.setString(3, userid);
+						
 						pstmt.executeUpdate();
 					}
 				}
@@ -65,6 +69,14 @@ public class UploadController extends HttpServlet {
 			}            
 		} catch(SQLException e){
 			throw new ServletException(e);
+		} finally {
+			try {
+				if (c != null) {
+					c.close();
+				}
+			} catch (SQLException e) {
+				throw new ServletException(e);
+			}
 		}
 		
 		doGet(request, response);

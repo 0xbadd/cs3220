@@ -4,8 +4,8 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,7 +17,7 @@ public class DeleteController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
  
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int id = Integer.parseInt(request.getParameter("id"));
+		String id = request.getParameter("id");
 		Connection c = null;
 		
 		try {
@@ -27,12 +27,21 @@ public class DeleteController extends HttpServlet {
 
 			c = DriverManager.getConnection(url, username, password);
 			
-			String sql = "DELETE FROM files WHERE id=" + id;
-
+			String sql = "DELETE FROM files WHERE id=?";
 			PreparedStatement pstmt = c.prepareStatement(sql);
+			pstmt.setString(1, id);
+
 			pstmt.executeUpdate();
-		} catch(Exception e) {
-			throw new IOException(e);
+		} catch(SQLException e) {
+			throw new ServletException(e);
+		} finally {
+			try {
+				if (c != null) {
+					c.close();
+				}
+			} catch (SQLException e) {
+				throw new ServletException(e);
+			}
 		}
 		
 		response.sendRedirect("FileList");

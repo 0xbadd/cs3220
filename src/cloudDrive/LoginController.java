@@ -35,6 +35,7 @@ public class LoginController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
+		int userid = -1;
 		boolean isValid = false;
 		Connection c = null;
 		
@@ -44,13 +45,15 @@ public class LoginController extends HttpServlet {
 			String dbPassword = "M**XK2EH";
 			
 			c = DriverManager.getConnection(url, dbUsername, dbPassword);
-			PreparedStatement ps = c.prepareStatement("SELECT * FROM users WHERE username=? AND password=?");
+			String sql = "SELECT * FROM users WHERE username=? AND password=?";
+			PreparedStatement ps = c.prepareStatement(sql);
 			ps.setString(1, username);
 			ps.setString(2, password);
 			ResultSet rs = ps.executeQuery();
 			
 			if (rs.next()) {
 				isValid = true;
+				userid = rs.getInt("id");
 			}
 		} catch (SQLException e) {
 			throw new ServletException(e);
@@ -65,7 +68,7 @@ public class LoginController extends HttpServlet {
 		}
 
 		if (isValid) {
-			request.getSession().setAttribute("user", username);
+			request.getSession().setAttribute("userid", userid);
 			response.sendRedirect("FileList");
 		} else {
 			request.getSession().setAttribute("error", "login");

@@ -4,8 +4,8 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -21,32 +21,42 @@ public class RenameController extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ServletContext context = getServletContext();
-//		int id = Integer.parseInt(request.getParameter("id"));
+		String id = request.getParameter("id");
 		String newName = request.getParameter("newName");
 
-		if(newName != null) {
-			Connection c = null;
-
-			try {
-				String url = "jdbc:mysql://cs3.calstatela.edu/cs3220stu83";
-				String username = "cs3220stu83";
-				String password = "ZsZ85.kr";
-
-				c = DriverManager.getConnection(url, username, password);
-
-				String sql = "UPDATE files SET File_Name = \'" + newName + "\' WHERE id=";
-
-				PreparedStatement pstmt = c.prepareStatement(sql);
-				pstmt.executeUpdate();
-			} catch(Exception e) {
-				throw new IOException(e);
-			}
-
-			response.sendRedirect("FileList");
+		if(newName == "") {
+			doGet(request, response);
+			return;
 		}
 
-		doGet(request, response);
+		Connection c = null;
+
+		try {
+			String url = "jdbc:mysql://cs3.calstatela.edu/cs3220stu83";
+			String username = "cs3220stu83";
+			String password = "ZsZ85.kr";
+
+			c = DriverManager.getConnection(url, username, password);
+
+			String sql = "UPDATE files SET File_Name=? WHERE id=?";
+			PreparedStatement pstmt = c.prepareStatement(sql);
+			pstmt.setString(1, newName);
+			pstmt.setString(2, id);
+
+			pstmt.executeUpdate();
+		} catch(SQLException e) {
+			throw new ServletException(e);
+		} finally {
+			try {
+				if (c != null) {
+					c.close();
+				}
+			} catch (SQLException e) {
+				throw new ServletException(e);
+			}
+		}
+
+		response.sendRedirect("FileList");
 	}
 
 }
