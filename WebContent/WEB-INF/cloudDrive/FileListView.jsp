@@ -1,17 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql" %>
-
-<sql:setDataSource
-	driver="com.mysql.jdbc.Driver"
-	url="jdbc:mysql://cs3.calstatela.edu/cs3220stu83"
-	user="cs3220stu83"
-	password="ZsZ85.kr" />
-	
-<sql:query var="files">
-	SELECT * FROM files WHERE User_id=${userid}
-</sql:query>  
 
 <!DOCTYPE html>
 <html>
@@ -28,20 +17,20 @@
 				name="upload" value="Upload" />
 		</form>
 		
-		<c:if test="${files.rowCount == 0}">
+		<c:if test="${empty files}">
 			<p>There are no files yet.</p>
 		</c:if>
 		
-		<c:if test="${files.rowCount > 0}">
-			<c:forEach items="${files.rows}" var="row">
+		<c:if test="${not empty files}">
+			<c:forEach items="${files}" var="file">
 				<div class="card">
 					<div class="card-header">
-					    <c:out value = "${row.File_Name}"/>
-					    <a href="Delete?id=${row.id}" class="float-right">Delete</a>
+					    <c:out value = "${file.filename}"/>
+					    <a href="Delete?id=${file.id}" class="float-right">Delete</a>
 					</div>
 					<div class="card-body">
-					    <a href="Download?path=${row.File_Path}">Download</a>
-					    <a href="Rename?id=${row.id}" class="float-right">Rename</a>
+					    <a href="Download?path=${file.filepath}">Download</a>
+					    <a href="Rename?id=${file.id}" class="float-right">Rename</a>
 					</div>
 				</div>
 			</c:forEach> 
