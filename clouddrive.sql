@@ -5,11 +5,11 @@ CREATE TABLE `users` (
   `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `username` varchar(50) NOT NULL,
   `email` varchar(50) NOT NULL,
-  `password` varchar(50) NOT NULL
+  `password` varchar(60) NOT NULL
 ) ENGINE='InnoDB';
 
 INSERT INTO `users` (`username`, `email`, `password`)
-VALUES ('albert', ' Albert.Cervantes16@calstatela.edu ', 'abcd');
+VALUES ('albert', 'acervan5@calstatela.edu', '$2a$10$lNCwo/6d6lyonT8S7KCpt.7xKpvj6aSGaqjm/fF/0w/ieLra/idOu');
 
 CREATE TABLE `files` (
   `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
