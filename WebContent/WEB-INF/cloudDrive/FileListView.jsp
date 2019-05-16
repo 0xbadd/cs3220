@@ -18,8 +18,19 @@
     <div class="row mt-3">
         <div class="col">
 			<form class="my-3 mx-auto text-center" action="Upload" method="post" enctype="multipart/form-data">
-				File: <input type="file" name="file"/> <input type="submit" name="upload" value="Upload"/>
+				File:
+				<input type="file" name="file"/>
+				<input type="submit" name="upload" value="Upload"/>
 			</form>
+			
+			<c:if test="${not empty param.id}">
+				<form class="my-3 mx-auto text-center" action="Rename" method="post">
+				    ${param.name}: 
+					<input type="text" name="newName" placeholder="Change name to...">
+					<input type="hidden" name="id" value="${param.id}">
+					<input type="submit" value="Submit">
+				</form>
+			</c:if>
 
 		    <hr class="my-4" style="width: 40rem;">
 
@@ -36,7 +47,7 @@
 					</h5>
 					<div class="card-body text-center">
 						<span class="mx-4">
-							<a href="Rename?id=${file.key}">
+							<a href="FileList?id=${file.key}&name=${file.value.filename}">
 								<i class="fas fa-edit fa-lg float-left" style="color:black"></i>
 							</a>
 						</span>
