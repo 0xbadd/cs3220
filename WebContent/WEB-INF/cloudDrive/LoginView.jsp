@@ -11,9 +11,19 @@
 </head>
 <body>
 <div class="container-fluid">
-	<div class="jumbotron my-4 mx-auto" style="width: 40rem;">
+	<div class="page-header my-4 mx-auto" style="width: 40rem;">
 		<h1 class="display-4 text-center">Cloud Drive Login</h1>
 	</div>
+	<c:if test="${error == 'login'}">
+	   <div class="card mx-auto my-3" style="width: 30rem;">
+		   <div class="card-header text-white bg-danger">
+			   An error has occurred.
+		   </div>
+		   <div class="card-body">
+			   <code>User name or password is incorrect.</code>
+		   </div>
+	   </div>
+	</c:if>
 	<div class="row mt-3">
 	    <div class="col">
 			<form class="mx-auto" style="width: 30rem;" action="Login" method="post">
@@ -27,16 +37,6 @@
 				</div>
 				<input class="btn btn-primary" type="submit" name="submitBtn" value="Log-in">
 			</form>
-			<c:if test="${error == 'login'}">
-			   <div class="card mx-auto my-3" style="width: 30rem;">
-				   <div class="card-header text-white bg-danger">
-					   An error has occurred.
-				   </div>
-				   <div class="card-body">
-					   <code>User name or password is incorrect.</code>
-				   </div>
-			   </div>
-			</c:if>
 	    </div>
 	</div>
 	<hr class="my-4" style="width: 40rem;">
