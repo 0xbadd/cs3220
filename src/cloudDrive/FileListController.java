@@ -30,7 +30,7 @@ public class FileListController extends HttpServlet {
 			String dbPassword = "M**XK2EH";
 			
 			c = DriverManager.getConnection(url, dbUsername, dbPassword);
-			String sql = "SELECT * FROM files WHERE User_id=?";
+			String sql = "SELECT * FROM files WHERE userid=?";
 			PreparedStatement ps = c.prepareStatement(sql);
 			ps.setInt(1, userid);
 			ResultSet rs = ps.executeQuery();

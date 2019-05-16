@@ -2,6 +2,8 @@ package cloudDrive;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -18,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.io.FilenameUtils;
 
 @WebServlet("/CloudDrive/Upload")
 public class UploadController extends HttpServlet {
@@ -28,7 +31,6 @@ public class UploadController extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Connection c = null;
 		DiskFileItemFactory factory = new DiskFileItemFactory();
 		ServletContext servletContext = this.getServletConfig().getServletContext();
 		File repository = (File) servletContext.getAttribute("javax.servlet.context.tempdir");
@@ -39,6 +41,7 @@ public class UploadController extends HttpServlet {
 
 		factory.setRepository(repository);
 		
+		Connection c = null;
 		try {
 			String url = "jdbc:mysql://cs3.calstatela.edu/cs3220stu77";
 			String dbUsername = "cs3220stu77";
@@ -50,15 +53,14 @@ public class UploadController extends HttpServlet {
 
 				for(FileItem item : items) {
 					if(!item.isFormField()) {
-						String fileName = (new File(item.getName())).getName();
+						String fileName = FilenameUtils.getName(item.getName());
 						File file = new File(fileDir, fileName);
-						String path = "WEB-INF\\\\uploads\\\\" + fileName;
 						item.write(file);
 						
 						String sql = "INSERT INTO files (filename, filepath, userid) VALUES (?, ?, ?)";
 						PreparedStatement pstmt = c.prepareStatement(sql);
 						pstmt.setString(1, fileName);
-						pstmt.setString(2, path);
+						pstmt.setString(2, file.toPath().toString());
 						pstmt.setInt(3, userid);
 						
 						pstmt.executeUpdate();
@@ -82,7 +84,7 @@ public class UploadController extends HttpServlet {
 		doGet(request, response);
 	}
 
-	public void addBackslash(String path) {
+	private String addBackslash(String path) {
 		String[] arrOfStrings = path.split("\\");
 		String newString = "";
 		int count = 0;
@@ -94,7 +96,7 @@ public class UploadController extends HttpServlet {
 			}
 		}
 		
-		path = newString;
+		return newString;
 	}
 
 }

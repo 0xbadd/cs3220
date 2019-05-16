@@ -1,10 +1,12 @@
 package cloudDrive;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -32,6 +34,12 @@ public class DeleteController extends HttpServlet {
 			pstmt.setString(1, id);
 
 			pstmt.executeUpdate();
+
+			@SuppressWarnings("unchecked")
+			Map<Integer, FileEntryBean> files = (Map<Integer, FileEntryBean>) request.getSession().getAttribute("files");
+			String filepath = files.get(Integer.parseInt(id)).getFilepath();
+			File file = new File(filepath);
+			file.delete();
 		} catch(SQLException e) {
 			throw new ServletException(e);
 		} finally {
