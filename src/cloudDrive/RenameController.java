@@ -32,13 +32,13 @@ public class RenameController extends HttpServlet {
 		Connection c = null;
 
 		try {
-			String url = "jdbc:mysql://cs3.calstatela.edu/cs3220stu83";
-			String username = "cs3220stu83";
-			String password = "ZsZ85.kr";
+			String url = "jdbc:mysql://cs3.calstatela.edu/cs3220stu77";
+			String dbUsername = "cs3220stu77";
+			String dbPassword = "M**XK2EH";
+			
+			c = DriverManager.getConnection(url, dbUsername, dbPassword);
 
-			c = DriverManager.getConnection(url, username, password);
-
-			String sql = "UPDATE files SET File_Name=? WHERE id=?";
+			String sql = "UPDATE files SET filename=? WHERE id=?";
 			PreparedStatement pstmt = c.prepareStatement(sql);
 			pstmt.setString(1, newName);
 			pstmt.setString(2, id);

@@ -40,11 +40,11 @@ public class UploadController extends HttpServlet {
 		factory.setRepository(repository);
 		
 		try {
-			String url = "jdbc:mysql://cs3.calstatela.edu/cs3220stu83";
-			String username = "cs3220stu83";
-			String password = "ZsZ85.kr";
-
-			c = DriverManager.getConnection(url, username, password);
+			String url = "jdbc:mysql://cs3.calstatela.edu/cs3220stu77";
+			String dbUsername = "cs3220stu77";
+			String dbPassword = "M**XK2EH";
+			
+			c = DriverManager.getConnection(url, dbUsername, dbPassword);
 			try {
 				List<FileItem> items = upload.parseRequest(request);
 
@@ -55,7 +55,7 @@ public class UploadController extends HttpServlet {
 						String path = "WEB-INF\\\\uploads\\\\" + fileName;
 						item.write(file);
 						
-						String sql = "INSERT INTO files (File_Name, File_Path, User_id) VALUES (?, ?, ?)";
+						String sql = "INSERT INTO files (filename, filepath, userid) VALUES (?, ?, ?)";
 						PreparedStatement pstmt = c.prepareStatement(sql);
 						pstmt.setString(1, fileName);
 						pstmt.setString(2, path);

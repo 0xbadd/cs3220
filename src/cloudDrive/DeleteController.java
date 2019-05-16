@@ -21,11 +21,11 @@ public class DeleteController extends HttpServlet {
 		Connection c = null;
 		
 		try {
-			String url = "jdbc:mysql://cs3.calstatela.edu/cs3220stu83";
-			String username = "cs3220stu83";
-			String password = "ZsZ85.kr";
+			String url = "jdbc:mysql://cs3.calstatela.edu/cs3220stu77";
+			String dbUsername = "cs3220stu77";
+			String dbPassword = "M**XK2EH";
 
-			c = DriverManager.getConnection(url, username, password);
+			c = DriverManager.getConnection(url, dbUsername, dbPassword);
 			
 			String sql = "DELETE FROM files WHERE id=?";
 			PreparedStatement pstmt = c.prepareStatement(sql);

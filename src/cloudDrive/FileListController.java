@@ -25,9 +25,9 @@ public class FileListController extends HttpServlet {
 		Connection c = null;
 		
 		try {
-			String url = "jdbc:mysql://cs3.calstatela.edu/cs3220stu83";
-			String dbUsername = "cs3220stu83";
-			String dbPassword = "ZsZ85.kr";
+			String url = "jdbc:mysql://cs3.calstatela.edu/cs3220stu77";
+			String dbUsername = "cs3220stu77";
+			String dbPassword = "M**XK2EH";
 			
 			c = DriverManager.getConnection(url, dbUsername, dbPassword);
 			String sql = "SELECT * FROM files WHERE User_id=?";
@@ -37,9 +37,9 @@ public class FileListController extends HttpServlet {
 			
 			while (rs.next()) {
 				FileEntryBean file = new FileEntryBean(
-						rs.getString("File_name"),
-						rs.getString("File_Path"),
-						rs.getInt("User_id")
+						rs.getString("filename"),
+						rs.getString("filepath"),
+						rs.getInt("userid")
 				);
 				files.put(rs.getInt("id"), file);
 			}
