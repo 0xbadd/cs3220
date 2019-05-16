@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 @WebServlet("/CloudDrive/Login")
 public class LoginController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -45,13 +47,12 @@ public class LoginController extends HttpServlet {
 			String dbPassword = "M**XK2EH";
 			
 			c = DriverManager.getConnection(url, dbUsername, dbPassword);
-			String sql = "SELECT * FROM users WHERE username=? AND password=?";
+			String sql = "SELECT * FROM users WHERE username=?";
 			PreparedStatement ps = c.prepareStatement(sql);
 			ps.setString(1, username);
-			ps.setString(2, password);
 			ResultSet rs = ps.executeQuery();
 			
-			if (rs.next()) {
+			if (rs.next() && BCrypt.checkpw(password, rs.getString("password"))) {
 				isValid = true;
 				userid = rs.getInt("id");
 			}
