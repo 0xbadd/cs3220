@@ -10,7 +10,7 @@
 	password="ZsZ85.kr" />
 	
 <sql:query var="files">
-	select * from files
+	SELECT * FROM files WHERE User_id=${userid}
 </sql:query>  
 
 <!DOCTYPE html>

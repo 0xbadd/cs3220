@@ -26,6 +26,7 @@ public class RegistrationController extends HttpServlet {
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
 		String passwordRepeat = request.getParameter("passwordRepeat");
+		int userid = -1;
 		boolean isValid = true;
 		Connection c = null;
 
@@ -71,6 +72,12 @@ public class RegistrationController extends HttpServlet {
 				ps.setString(2, email);
 				ps.setString(3, password);
 				ps.executeUpdate();
+				
+				ps = c.prepareStatement("SELECT * FROM users WHERE username=?");
+				ps.setString(1, username);
+				rs = ps.executeQuery();
+				
+				userid = rs.getInt("id");
 			}
 		} catch (SQLException e) {
 			throw new ServletException(e);
@@ -85,7 +92,7 @@ public class RegistrationController extends HttpServlet {
 		}
 
 		if (isValid) {
-			request.getSession().setAttribute("user", username);
+			request.getSession().setAttribute("userid", userid);
 			response.sendRedirect("FileList");
 		} else {
 			doGet(request, response);

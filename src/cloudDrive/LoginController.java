@@ -35,6 +35,7 @@ public class LoginController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
+		int userid = -1;
 		boolean isValid = false;
 		Connection c = null;
 		
@@ -51,6 +52,7 @@ public class LoginController extends HttpServlet {
 			
 			if (rs.next()) {
 				isValid = true;
+				userid = rs.getInt("id");
 			}
 		} catch (SQLException e) {
 			throw new ServletException(e);
@@ -65,7 +67,7 @@ public class LoginController extends HttpServlet {
 		}
 
 		if (isValid) {
-			request.getSession().setAttribute("user", username);
+			request.getSession().setAttribute("userid", userid);
 			response.sendRedirect("FileList");
 		} else {
 			request.getSession().setAttribute("error", "login");
