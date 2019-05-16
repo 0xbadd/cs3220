@@ -29,7 +29,7 @@
 					    <a href="Delete?id=${file.key}" class="float-right">Delete</a>
 					</div>
 					<div class="card-body">
-					    <a href="Download?path=${file.value.filepath}">Download</a>
+					    <a href="Download?id=${file.key}">Download</a>
 					    <a href="Rename?id=${file.key}" class="float-right">Rename</a>
 					</div>
 				</div>
