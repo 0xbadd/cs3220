@@ -14,6 +14,26 @@
 	<div class="jumbotron my-4 mx-auto" style="width: 40rem;">
 		<h1 class="display-4 text-center">New User Registration</h1>
 	</div>
+	<c:if test="${not empty error}">
+	   <div class="card mx-auto my-3" style="width: 30rem;">
+		   <div class="card-header text-white bg-danger">
+			   An error has occurred.
+		   </div>
+		   <div class="card-body">
+			   <code>
+				   <c:if test="${error == 'username'}">
+					   There is already an account under this username.
+				   </c:if>
+				   <c:if test="${error == 'password'}">
+					   Passwords do not match.
+				   </c:if>
+				   <c:if test="${error == 'email'}">
+					   There is already an account under this email.
+				   </c:if>
+			   </code>
+		   </div>
+	   </div>
+	</c:if>
 	<div class="row mt-3">
 	    <div class="col">
 			<form class="mx-auto my-3" style="width: 30rem;" action="Register" method="post">
@@ -35,26 +55,6 @@
 				</div>
 				<input class="btn btn-primary" type="submit" name="submitBtn" value="Register">
 			</form>
-			<c:if test="${not empty error}">
-			   <div class="card mx-auto my-3" style="width: 30rem;">
-				   <div class="card-header text-white bg-danger">
-					   An error has occurred.
-				   </div>
-				   <div class="card-body">
-					   <code>
-			               <c:if test="${error == 'username'}">
-			                   There is already an account under this username.
-			               </c:if>
-			               <c:if test="${error == 'password'}">
-			                   Passwords do not match.
-			               </c:if>
-			               <c:if test="${error == 'email'}">
-			                   There is already an account under this email.
-			               </c:if>
-					   </code>
-				   </div>
-			   </div>
-			</c:if>
 		</div>
 	</div>
 </div>
