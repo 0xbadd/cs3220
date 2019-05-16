@@ -60,7 +60,7 @@ public class UploadController extends HttpServlet {
 						String sql = "INSERT INTO files (filename, filepath, userid) VALUES (?, ?, ?)";
 						PreparedStatement pstmt = c.prepareStatement(sql);
 						pstmt.setString(1, fileName);
-						pstmt.setString(2, file.toPath().toString());
+						pstmt.setString(2, file.getAbsolutePath());
 						pstmt.setInt(3, userid);
 						
 						pstmt.executeUpdate();
