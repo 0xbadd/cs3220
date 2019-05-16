@@ -17,12 +17,7 @@ public class DownloadController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String path = request.getParameter("path");
 		String fileDir = getServletContext().getRealPath(path);	
-
-//		response.setContentType( "image/jpg" );
-//        response.setHeader( "Content-Disposition",
-//            "attachment; filename=cark.jpg" );
-
-        FileInputStream in = new FileInputStream(path);
+        FileInputStream in = new FileInputStream(fileDir);
         OutputStream out = response.getOutputStream();
         byte buffer[] = new byte[2048];
         int bytesRead;
