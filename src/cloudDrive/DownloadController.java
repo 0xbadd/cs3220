@@ -3,9 +3,7 @@ package cloudDrive;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.sql.Connection;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,31 +15,25 @@ public class DownloadController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ServletContext context = getServletContext();
-		
 		String path = request.getParameter("path");
-		
 		String fileDir = getServletContext().getRealPath(path);	
-		
-		Connection c = null;
-		
+
 //		response.setContentType( "image/jpg" );
 //        response.setHeader( "Content-Disposition",
 //            "attachment; filename=cark.jpg" );
 
-        FileInputStream in = new FileInputStream( path );
+        FileInputStream in = new FileInputStream(path);
         OutputStream out = response.getOutputStream();
-
         byte buffer[] = new byte[2048];
-        
         int bytesRead;
         
-        while( (bytesRead = in.read( buffer )) > 0 )
-            out.write( buffer, 0, bytesRead );
+        while((bytesRead = in.read(buffer)) > 0) {
+            out.write(buffer, 0, bytesRead);
+        }
 
         in.close();
         
-		response.sendRedirect("FileListController");
+		response.sendRedirect("FileList");
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
