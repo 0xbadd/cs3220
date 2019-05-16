@@ -21,7 +21,7 @@ public class FileListController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		List<FileEntryBean> files = new ArrayList<>();
-		String userid = (String) request.getAttribute("userid");
+		int userid = (int) request.getSession().getAttribute("userid");
 		Connection c = null;
 		
 		try {
@@ -32,7 +32,7 @@ public class FileListController extends HttpServlet {
 			c = DriverManager.getConnection(url, dbUsername, dbPassword);
 			String sql = "SELECT * FROM files WHERE User_id=?";
 			PreparedStatement ps = c.prepareStatement(sql);
-			ps.setString(1, userid);
+			ps.setInt(1, userid);
 			ResultSet rs = ps.executeQuery();
 			
 			while (rs.next()) {

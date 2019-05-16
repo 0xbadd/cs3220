@@ -35,7 +35,7 @@ public class UploadController extends HttpServlet {
 		ServletFileUpload upload = new ServletFileUpload(factory);
 		String fileDir = getServletContext().getRealPath("/WEB-INF/uploads");
 		
-		String userid = (String) request.getAttribute("userid");
+		int userid = (int) request.getSession().getAttribute("userid");
 
 		factory.setRepository(repository);
 		
@@ -59,7 +59,7 @@ public class UploadController extends HttpServlet {
 						PreparedStatement pstmt = c.prepareStatement(sql);
 						pstmt.setString(1, fileName);
 						pstmt.setString(2, path);
-						pstmt.setString(3, userid);
+						pstmt.setInt(3, userid);
 						
 						pstmt.executeUpdate();
 					}
