@@ -9,7 +9,7 @@ CREATE TABLE `users` (
 ) ENGINE='InnoDB';
 
 INSERT INTO `users` (`username`, `email`, `password`)
-VALUES ('albert', 'acervan5@calstatela.edu', '$2b$10$.E5GcFmGcPROIedn7e6Wm.fs3SCfZ/OCHDo1LfGCdrpTZXO631YoW');
+VALUES ('albert', 'acervan5@calstatela.edu', '$2a$10$lNCwo/6d6lyonT8S7KCpt.7xKpvj6aSGaqjm/fF/0w/ieLra/idOu');
 
 CREATE TABLE `files` (
   `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,

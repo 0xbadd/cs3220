@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 @WebServlet("/CloudDrive/Register")
 public class RegistrationController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -69,11 +71,12 @@ public class RegistrationController extends HttpServlet {
 			}
 			
 			if (isValid) {
+				String passwordHash = BCrypt.hashpw(password, BCrypt.gensalt());
 				sql = "INSERT INTO users (username, email, password) values (?, ?, ?)";
 				ps = c.prepareStatement(sql);
 				ps.setString(1, username);
 				ps.setString(2, email);
-				ps.setString(3, password);
+				ps.setString(3, passwordHash);
 				ps.executeUpdate();
 				
 				sql = "SELECT * FROM users WHERE username=?";
@@ -81,7 +84,9 @@ public class RegistrationController extends HttpServlet {
 				ps.setString(1, username);
 				rs = ps.executeQuery();
 				
-				userid = rs.getInt("id");
+				if (rs.next()) {
+					userid = rs.getInt("id");
+				}
 			}
 		} catch (SQLException e) {
 			throw new ServletException(e);
