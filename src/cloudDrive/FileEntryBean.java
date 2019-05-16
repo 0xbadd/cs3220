@@ -1,20 +1,14 @@
 package cloudDrive;
 
 public class FileEntryBean {
-	private int id;
 	private String filename;
 	private String filepath;
 	private int userid;
 
-	public FileEntryBean(int id, String filename, String filepath, int userid) {
-		this.id = id;
+	public FileEntryBean(String filename, String filepath, int userid) {
 		this.filename = filename;
 		this.filepath = filepath;
 		this.userid = userid;
-	}
-
-	public int getId() {
-		return id;
 	}
 
 	public String getFilename() {

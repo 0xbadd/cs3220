@@ -25,12 +25,12 @@
 			<c:forEach items="${files}" var="file">
 				<div class="card">
 					<div class="card-header">
-					    <c:out value = "${file.filename}"/>
-					    <a href="Delete?id=${file.id}" class="float-right">Delete</a>
+					    <c:out value = "${file.value.filename}"/>
+					    <a href="Delete?id=${file.key}" class="float-right">Delete</a>
 					</div>
 					<div class="card-body">
-					    <a href="Download?path=${file.filepath}">Download</a>
-					    <a href="Rename?id=${file.id}" class="float-right">Rename</a>
+					    <a href="Download?path=${file.value.filepath}">Download</a>
+					    <a href="Rename?id=${file.key}" class="float-right">Rename</a>
 					</div>
 				</div>
 			</c:forEach> 

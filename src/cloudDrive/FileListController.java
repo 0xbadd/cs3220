@@ -6,8 +6,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,7 +20,7 @@ public class FileListController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		List<FileEntryBean> files = new ArrayList<>();
+		Map<Integer, FileEntryBean> files = new LinkedHashMap<>();
 		int userid = (int) request.getSession().getAttribute("userid");
 		Connection c = null;
 		
@@ -37,12 +37,11 @@ public class FileListController extends HttpServlet {
 			
 			while (rs.next()) {
 				FileEntryBean file = new FileEntryBean(
-						rs.getInt("id"),
 						rs.getString("File_name"),
 						rs.getString("File_Path"),
 						rs.getInt("User_id")
 				);
-				files.add(file);
+				files.put(rs.getInt("id"), file);
 			}
 		} catch (SQLException e) {
 			throw new ServletException(e);
