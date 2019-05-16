@@ -45,7 +45,8 @@ public class LoginController extends HttpServlet {
 			String dbPassword = "M**XK2EH";
 			
 			c = DriverManager.getConnection(url, dbUsername, dbPassword);
-			PreparedStatement ps = c.prepareStatement("SELECT * FROM users WHERE username=? AND password=?");
+			String sql = "SELECT * FROM users WHERE username=? AND password=?";
+			PreparedStatement ps = c.prepareStatement(sql);
 			ps.setString(1, username);
 			ps.setString(2, password);
 			ResultSet rs = ps.executeQuery();

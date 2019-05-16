@@ -48,7 +48,8 @@ public class RegistrationController extends HttpServlet {
 			
 			c = DriverManager.getConnection(url, dbUsername, dbPassword);
 
-			PreparedStatement ps = c.prepareStatement("SELECT * FROM users WHERE username=?");
+			String sql = "SELECT * FROM users WHERE username=?";
+			PreparedStatement ps = c.prepareStatement(sql);
 			ps.setString(1, username);
 			ResultSet rs = ps.executeQuery();
 			
@@ -57,7 +58,8 @@ public class RegistrationController extends HttpServlet {
 				request.getSession().setAttribute("error", "username");
 			}
 
-			ps = c.prepareStatement("SELECT * FROM users WHERE email=?");
+			sql = "SELECT * FROM users WHERE email=?";
+			ps = c.prepareStatement(sql);
 			ps.setString(1, email);
 			rs = ps.executeQuery();
 			
@@ -67,13 +69,15 @@ public class RegistrationController extends HttpServlet {
 			}
 			
 			if (isValid) {
-				ps = c.prepareStatement("INSERT INTO users (username, email, password) values (?, ?, ?)");
+				sql = "INSERT INTO users (username, email, password) values (?, ?, ?)";
+				ps = c.prepareStatement(sql);
 				ps.setString(1, username);
 				ps.setString(2, email);
 				ps.setString(3, password);
 				ps.executeUpdate();
 				
-				ps = c.prepareStatement("SELECT * FROM users WHERE username=?");
+				sql = "SELECT * FROM users WHERE username=?";
+				ps = c.prepareStatement(sql);
 				ps.setString(1, username);
 				rs = ps.executeQuery();
 				
