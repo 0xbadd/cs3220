@@ -11,7 +11,7 @@
 </head>
 <body>
 <div class="container-fluid">
-	<div class="jumbotron my-4 mx-auto" style="width: 40rem;">
+	<div class="page-header my-4 mx-auto" style="width: 40rem;">
 		<h1 class="display-4 text-center">New User Registration</h1>
 	</div>
 	<c:if test="${not empty error}">
