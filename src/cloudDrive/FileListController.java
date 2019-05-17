@@ -66,8 +66,7 @@ public class FileListController extends HttpServlet {
 				FolderEntryBean folder = new FolderEntryBean(
 						rs.getInt("userid"),
 						rs.getString("foldername"),
-						rs.getString("parentpath"),
-						rs.getInt("parentid")
+						rs.getString("parentpath")
 				);
 				folders.put(rs.getInt("id"), folder);
 			}

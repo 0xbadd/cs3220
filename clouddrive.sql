@@ -21,6 +21,5 @@ CREATE TABLE `folders` (
   `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `userid` int NOT NULL,
   `foldername` varchar(50) NOT NULL,
-  `parentpath` varchar(50) NULL,
-  `parentid` int NULL
+  `parentpath` varchar(50) NULL
 ) ENGINE='InnoDB';

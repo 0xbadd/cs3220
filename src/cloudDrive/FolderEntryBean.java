@@ -4,12 +4,11 @@ public class FolderEntryBean {
 	private int userid;
 	private String foldername;
 	private String parentpath;
-	private int parentid;
 
-	public FolderEntryBean(int userid, String foldername, String parentpath, int parentid) {
+	public FolderEntryBean(int userid, String foldername, String parentpath) {
 		this.userid = userid;
 		this.foldername = foldername;
-		this.parentid = parentid;
+		this.parentpath = parentpath;
 	}
 
 	public int getUserid() {
@@ -24,7 +23,4 @@ public class FolderEntryBean {
 		return parentpath;
 	}
 
-	public int getParentid() {
-		return parentid;
-	}
 }
