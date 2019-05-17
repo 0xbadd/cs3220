@@ -33,6 +33,9 @@
 				   <c:if test="${error == 'badusername'}">
 					   Usernames can not contain special characters or spaces.
 				   </c:if>
+				   <c:if test="${error == 'bademail'}">
+					   Not a valid email address.
+				   </c:if>
 			   </code>
 		   </div>
 	   </div>

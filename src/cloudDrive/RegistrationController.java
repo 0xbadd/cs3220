@@ -51,6 +51,12 @@ public class RegistrationController extends HttpServlet {
 			doGet(request, response);
 			return;
 		}
+
+		if (email.matches(".*[^\\w-.@].*")) {
+			request.getSession().setAttribute("error", "bademail");
+			doGet(request, response);
+			return;
+		}
 		
 		try {
 			String url = "jdbc:mysql://cs3.calstatela.edu/cs3220stu77";
