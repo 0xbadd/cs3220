@@ -79,7 +79,7 @@ public class RegistrationController extends HttpServlet {
 				ps.setString(2, email);
 				ps.setString(3, passwordHash);
 				ps.executeUpdate();
-				
+
 				sql = "SELECT * FROM users WHERE username=?";
 				ps = c.prepareStatement(sql);
 				ps.setString(1, username);
@@ -89,6 +89,12 @@ public class RegistrationController extends HttpServlet {
 					userid = rs.getInt("id");
 					userRoot = username;
 				}
+
+				sql = "INSERT INTO folders (userid, foldername) values (?, ?)";
+				ps = c.prepareStatement(sql);
+				ps.setInt(1, userid);
+				ps.setString(2, "/" + username);
+				ps.executeUpdate();
 			}
 		} catch (SQLException e) {
 			throw new ServletException(e);
