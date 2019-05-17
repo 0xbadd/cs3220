@@ -21,7 +21,7 @@ public class FileListController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int userid = (int) request.getSession().getAttribute("userid");
-		String folderpath = (String) request.getSession().getAttribute("currentFolder");
+		String folderPath = (String) request.getSession().getAttribute("folderPath");
 		Map<Integer, FileEntryBean> files = new LinkedHashMap<>();
 		Connection c = null;
 		
@@ -34,7 +34,7 @@ public class FileListController extends HttpServlet {
 			String sql = "SELECT * FROM files WHERE userid=? AND folderpath=?";
 			PreparedStatement ps = c.prepareStatement(sql);
 			ps.setInt(1, userid);
-			ps.setString(2, folderpath);
+			ps.setString(2, folderPath);
 			ResultSet rs = ps.executeQuery();
 			
 			while (rs.next()) {

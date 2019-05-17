@@ -73,6 +73,7 @@ public class LoginController extends HttpServlet {
 		if (isValid) {
 			request.getSession().setAttribute("userid", userid);
 			request.getSession().setAttribute("userRoot", userRoot);
+			request.getSession().setAttribute("folderpath", userRoot);
 			request.getSession().setAttribute("currentFolder", userRoot);
 			response.sendRedirect("FileList");
 		} else {

@@ -13,7 +13,7 @@
 <body>
 <div class="container-fluid">
     <div class="page-header my-4 mx-auto" style="width: 40rem;">
-        <h1 class="display-4 text-center">File List</h1>
+        <h1 class="display-4 text-center">${folderPath}</h1>
     </div>
     <div class="row mt-3">
         <div class="col">
@@ -39,6 +39,11 @@
 				<input type="submit" value="Search"/>
 			</form>
 			
+			<form class="my-3 mx-auto text-center" action="FileList" method="get" enctype="multipart/form-data">
+				<input type="text" name="folderName" placeholder="Enter folder name"/>
+				<input type="submit" value="Create Folder"/>
+			</form>
+
 			<c:if test="${not empty param.id}">
 				<form class="my-3 mx-auto text-center" action="Rename" method="post">
 				    ${param.name}: 
