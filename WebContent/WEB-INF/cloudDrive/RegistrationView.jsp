@@ -36,6 +36,9 @@
 				   <c:if test="${error == 'bademail'}">
 					   Not a valid email address.
 				   </c:if>
+				   <c:if test="${error == 'emptyfields'}">
+					   All fields must be filled in.
+				   </c:if>
 			   </code>
 		   </div>
 	   </div>

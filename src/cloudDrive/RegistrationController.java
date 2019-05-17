@@ -42,6 +42,7 @@ public class RegistrationController extends HttpServlet {
 		}
 		
 		if (username == "" || email == "" || password == "") {
+			request.getSession().setAttribute("error", "emptyfields");
 			doGet(request, response);
 			return;
 		}
