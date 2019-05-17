@@ -66,6 +66,15 @@
 			</form>
 		</div>
 	</div>
+	<hr class="my-4" style="width: 40rem;">
+	<div class="row mt-3">
+	    <div class="col">
+	        <p class="mx-auto" style="width: 30rem;">
+	            Already have an account?
+	            <a href="Login">Login</a>
+	        </p>
+	    </div>
+	</div>
 </div>
 </body>
 </html>
