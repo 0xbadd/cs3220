@@ -21,7 +21,7 @@ public class FileListController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int userid = (int) request.getSession().getAttribute("userid");
-		String folderPath = (String) request.getSession().getAttribute("folderPath");
+		String folderPath = (String) request.getSession().getAttribute("folderpath");
 		Map<Integer, FileEntryBean> files = new LinkedHashMap<>();
 		Connection c = null;
 		

@@ -13,19 +13,25 @@
 <body>
 <div class="container-fluid">
     <div class="page-header my-4 mx-auto" style="width: 40rem;">
-        <h1 class="display-4 text-center">${folderPath}</h1>
+        <h1 class="display-4 text-center">${folderpath}</h1>
     </div>
     <div class="row mt-3">
         <div class="col">
-			<c:if test="${error == 'duplicate'}">
+			<c:if test="${not empty error}">
 			   <div class="card mx-auto my-3" style="width: 30rem;">
 				   <div class="card-header text-white bg-danger">
 					   An error has occurred.
 				   </div>
 				   <div class="card-body">
-					   <code>Uploaded file already exists.</code>
+			           <c:if test="${error == 'duplicate'}">
+					       <code>Uploaded file already exists.</code>
+			           </c:if>
+			           <c:if test="${error == 'folder'}">
+					       <code>Invalid folder name.</code>
+			           </c:if>
 				   </div>
 			   </div>
+			   <c:set var="error" scope="session" value=""/>
 			</c:if>
 
 			<form class="my-3 mx-auto text-center" action="Upload" method="post" enctype="multipart/form-data">
@@ -34,12 +40,12 @@
 				<input type="submit" name="upload" value="Upload"/>
 			</form>
 
-			<form class="my-3 mx-auto text-center" action="FileList" method="get" enctype="multipart/form-data">
+			<form class="my-3 mx-auto text-center" action="FileList" method="get">
 				<input type="text" name="query" placeholder="Enter your search"/>
 				<input type="submit" value="Search"/>
 			</form>
 			
-			<form class="my-3 mx-auto text-center" action="FileList" method="get" enctype="multipart/form-data">
+			<form class="my-3 mx-auto text-center" action="CreateFolder" method="post">
 				<input type="text" name="folderName" placeholder="Enter folder name"/>
 				<input type="submit" value="Create Folder"/>
 			</form>
