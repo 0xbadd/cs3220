@@ -25,6 +25,7 @@ public class RenameController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String id = request.getParameter("id");
 		String newName = request.getParameter("newName");
+		String folderpath = (String) request.getSession().getAttribute("folderpath");
 
 		if(newName == "") {
 			doGet(request, response);
@@ -41,21 +42,21 @@ public class RenameController extends HttpServlet {
 			c = DriverManager.getConnection(url, dbUsername, dbPassword);
 
 			String fileDir = getServletContext().getRealPath("/WEB-INF/uploads");
-			String path = (new File(fileDir, newName)).getAbsolutePath();
+			String newPath = (new File(fileDir + folderpath, newName)).getAbsolutePath();
 			String sql = "UPDATE files SET filename=?, filepath=? WHERE id=?";
 			PreparedStatement pstmt = c.prepareStatement(sql);
 			pstmt.setString(1, newName);
-			pstmt.setString(2, path);
+			pstmt.setString(2, newPath);
 			pstmt.setString(3, id);
 
 			pstmt.executeUpdate();
 
 			@SuppressWarnings("unchecked")
 			Map<Integer, FileEntryBean> files = (Map<Integer, FileEntryBean>) request.getSession().getAttribute("files");
-			String filepath = files.get(Integer.parseInt(id)).getFilepath();
-			File file = new File(filepath);
+			String oldfilepath = files.get(Integer.parseInt(id)).getFilepath();
+			File file = new File(oldfilepath);
 			
-			File file2 = new File(fileDir, newName);
+			File file2 = new File(fileDir + folderpath, newName);
 			file.renameTo(file2);
 		} catch(SQLException e) {
 			throw new ServletException(e);
