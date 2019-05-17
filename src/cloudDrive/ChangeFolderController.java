@@ -20,18 +20,13 @@ public class ChangeFolderController extends HttpServlet {
 			String folderPath = (String) request.getSession().getAttribute("folderpath");
 			String parentPath = folderPath.substring(0, folderPath.lastIndexOf("/"));
 
-			String[] parts = parentPath.split("/");
-			String parentFolder = "/" + parts[parts.length - 1];
-
 			request.getSession().setAttribute("folderpath", parentPath);
-			request.getSession().setAttribute("currentFolder", parentFolder);
 		} else {
 			@SuppressWarnings("unchecked")
 			Map<Integer, FolderEntryBean> folders = (Map<Integer, FolderEntryBean>) request.getSession().getAttribute("folders");
 			FolderEntryBean folder = folders.get(id);
 
 			request.getSession().setAttribute("folderpath", folder.getParentpath() + folder.getFoldername());
-			request.getSession().setAttribute("currentFolder", folder.getFoldername());
 		}
 
 		response.sendRedirect("FileList");

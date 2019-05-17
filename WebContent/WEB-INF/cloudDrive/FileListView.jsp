@@ -61,10 +61,10 @@
 			
 			<div class="my-3 mx-auto text-center">
 				Folders: 
-				<c:if test="${empty folders and currentFolder == userRoot}">
+				<c:if test="${empty folders and folderpath == userRoot}">
 				    None
 				</c:if>
-				<c:if test="${currentFolder != userRoot}">
+				<c:if test="${folderpath != userRoot}">
 					<a class="btn btn-primary" href="ChangeFolder?id=0">...</a>
 				</c:if>
 				<c:forEach var="folder" items="${folders}">

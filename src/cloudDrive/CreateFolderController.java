@@ -30,7 +30,6 @@ public class CreateFolderController extends HttpServlet {
 		} else {
 			folderName = "/" + folderName;
 			String folderpath = parentpath + folderName;
-			request.getSession().setAttribute("currentFolder", folderName);
 			request.getSession().setAttribute("folderpath", folderpath);
 
 			Connection c = null;
