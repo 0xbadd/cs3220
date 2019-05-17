@@ -20,8 +20,10 @@ public class FileListController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Map<Integer, FileEntryBean> files = new LinkedHashMap<>();
 		int userid = (int) request.getSession().getAttribute("userid");
+		String folderPath = (String) request.getSession().getAttribute("folderpath");
+		Map<Integer, FileEntryBean> files = new LinkedHashMap<>();
+		Map<Integer, FolderEntryBean> folders = new LinkedHashMap<>();
 		Connection c = null;
 		
 		try {
@@ -30,9 +32,10 @@ public class FileListController extends HttpServlet {
 			String dbPassword = "M**XK2EH";
 			
 			c = DriverManager.getConnection(url, dbUsername, dbPassword);
-			String sql = "SELECT * FROM files WHERE userid=?";
+			String sql = "SELECT * FROM files WHERE userid=? AND folderpath=?";
 			PreparedStatement ps = c.prepareStatement(sql);
 			ps.setInt(1, userid);
+			ps.setString(2, folderPath);
 			ResultSet rs = ps.executeQuery();
 			
 			while (rs.next()) {
@@ -43,10 +46,26 @@ public class FileListController extends HttpServlet {
 					FileEntryBean file = new FileEntryBean(
 							rs.getString("filename"),
 							rs.getString("filepath"),
-							rs.getInt("userid")
+							rs.getInt("userid"),
+							rs.getString("folderpath")
 					);
 					files.put(rs.getInt("id"), file);
 				}
+			}
+
+			sql = "SELECT * FROM folders WHERE userid=? AND parentpath=?";
+			ps = c.prepareStatement(sql);
+			ps.setInt(1, userid);
+			ps.setString(2, folderPath);
+			rs = ps.executeQuery();
+			
+			while (rs.next()) {
+				FolderEntryBean folder = new FolderEntryBean(
+						rs.getInt("userid"),
+						rs.getString("foldername"),
+						rs.getString("parentpath")
+				);
+				folders.put(rs.getInt("id"), folder);
 			}
 		} catch (SQLException e) {
 			throw new ServletException(e);
@@ -61,6 +80,7 @@ public class FileListController extends HttpServlet {
 		}
 
 		request.getSession().setAttribute("files", files);
+		request.getSession().setAttribute("folders", folders);
 		request.getRequestDispatcher("/WEB-INF/cloudDrive/FileListView.jsp").forward(request, response);
 	}
 

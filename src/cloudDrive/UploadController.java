@@ -35,6 +35,7 @@ public class UploadController extends HttpServlet {
 		File repository = (File) servletContext.getAttribute("javax.servlet.context.tempdir");
 		ServletFileUpload upload = new ServletFileUpload(factory);
 		String fileDir = getServletContext().getRealPath("/WEB-INF/uploads");
+		String folderpath = (String) request.getSession().getAttribute("folderpath");
 		boolean isValid = true;
 		
 		int userid = (int) request.getSession().getAttribute("userid");
@@ -54,7 +55,7 @@ public class UploadController extends HttpServlet {
 				for(FileItem item : items) {
 					if(!item.isFormField()) {
 						String fileName = FilenameUtils.getName(item.getName());
-						File file = new File(fileDir, fileName);
+						File file = new File(fileDir + folderpath, fileName);
 						String filepath = file.getAbsolutePath();
 
 						String sql = "SELECT * FROM files WHERE filepath=?";
@@ -65,15 +66,16 @@ public class UploadController extends HttpServlet {
 						if (rs.next()) {
 							isValid = false;
 						} else {
-							item.write(file);
-							
-							sql = "INSERT INTO files (filename, filepath, userid) VALUES (?, ?, ?)";
+							sql = "INSERT INTO files (filename, filepath, userid, folderpath) VALUES (?, ?, ?, ?)";
 							pstmt = c.prepareStatement(sql);
 							pstmt.setString(1, fileName);
 							pstmt.setString(2, filepath);
 							pstmt.setInt(3, userid);
+							pstmt.setString(4, folderpath);
 							
 							pstmt.executeUpdate();
+
+							item.write(file);
 						}
 
 					}

@@ -29,6 +29,7 @@ public class RegistrationController extends HttpServlet {
 		String password = request.getParameter("password");
 		String passwordRepeat = request.getParameter("passwordRepeat");
 		int userid = -1;
+		String userRoot = null;
 		boolean isValid = true;
 		Connection c = null;
 
@@ -78,7 +79,7 @@ public class RegistrationController extends HttpServlet {
 				ps.setString(2, email);
 				ps.setString(3, passwordHash);
 				ps.executeUpdate();
-				
+
 				sql = "SELECT * FROM users WHERE username=?";
 				ps = c.prepareStatement(sql);
 				ps.setString(1, username);
@@ -86,7 +87,14 @@ public class RegistrationController extends HttpServlet {
 				
 				if (rs.next()) {
 					userid = rs.getInt("id");
+					userRoot = "/" + username;
 				}
+
+				sql = "INSERT INTO folders (userid, foldername) values (?, ?)";
+				ps = c.prepareStatement(sql);
+				ps.setInt(1, userid);
+				ps.setString(2, userRoot);
+				ps.executeUpdate();
 			}
 		} catch (SQLException e) {
 			throw new ServletException(e);
@@ -102,6 +110,8 @@ public class RegistrationController extends HttpServlet {
 
 		if (isValid) {
 			request.getSession().setAttribute("userid", userid);
+			request.getSession().setAttribute("userRoot", userRoot);
+			request.getSession().setAttribute("folderpath", userRoot);
 			response.sendRedirect("FileList");
 		} else {
 			doGet(request, response);

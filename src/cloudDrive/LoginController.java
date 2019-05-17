@@ -38,6 +38,7 @@ public class LoginController extends HttpServlet {
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 		int userid = -1;
+		String userRoot = null;
 		boolean isValid = false;
 		Connection c = null;
 		
@@ -55,6 +56,7 @@ public class LoginController extends HttpServlet {
 			if (rs.next() && BCrypt.checkpw(password, rs.getString("password"))) {
 				isValid = true;
 				userid = rs.getInt("id");
+				userRoot = "/" + rs.getString("username");
 			}
 		} catch (SQLException e) {
 			throw new ServletException(e);
@@ -70,6 +72,8 @@ public class LoginController extends HttpServlet {
 
 		if (isValid) {
 			request.getSession().setAttribute("userid", userid);
+			request.getSession().setAttribute("userRoot", userRoot);
+			request.getSession().setAttribute("folderpath", userRoot);
 			response.sendRedirect("FileList");
 		} else {
 			request.getSession().setAttribute("error", "login");
