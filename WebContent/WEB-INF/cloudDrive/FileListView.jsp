@@ -59,6 +59,12 @@
 				</form>
 			</c:if>
 			
+			<c:if test="${currentFolder != userRoot}">
+			    <div class="my-3 mx-auto text-center">
+			        Folders: <a class="btn btn-primary" href="ChangeFolder?back=1">...</a>
+			    </div>
+			</c:if>
+			
 			<c:if test="${not empty share}">
 			     <div class="my-3 mx-auto text-center">
 			         <h3>
