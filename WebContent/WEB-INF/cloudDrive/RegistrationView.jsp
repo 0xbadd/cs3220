@@ -30,6 +30,9 @@
 				   <c:if test="${error == 'email'}">
 					   There is already an account under this email.
 				   </c:if>
+				   <c:if test="${error == 'badusername'}">
+					   Usernames can not contain special characters or spaces.
+				   </c:if>
 			   </code>
 		   </div>
 	   </div>
