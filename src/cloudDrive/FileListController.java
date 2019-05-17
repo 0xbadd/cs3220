@@ -36,12 +36,17 @@ public class FileListController extends HttpServlet {
 			ResultSet rs = ps.executeQuery();
 			
 			while (rs.next()) {
-				FileEntryBean file = new FileEntryBean(
-						rs.getString("filename"),
-						rs.getString("filepath"),
-						rs.getInt("userid")
-				);
-				files.put(rs.getInt("id"), file);
+				String query = request.getParameter("query");
+				query = query == null ? "" : query.toLowerCase();
+				
+				if (rs.getString("filename").toLowerCase().indexOf(query) >= 0) {
+					FileEntryBean file = new FileEntryBean(
+							rs.getString("filename"),
+							rs.getString("filepath"),
+							rs.getInt("userid")
+					);
+					files.put(rs.getInt("id"), file);
+				}
 			}
 		} catch (SQLException e) {
 			throw new ServletException(e);

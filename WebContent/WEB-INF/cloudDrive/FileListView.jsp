@@ -33,6 +33,11 @@
 				<input type="file" name="file"/>
 				<input type="submit" name="upload" value="Upload"/>
 			</form>
+
+			<form class="my-3 mx-auto text-center" action="FileList" method="get" enctype="multipart/form-data">
+				<input type="text" name="query" placeholder="Enter your search"/>
+				<input type="submit" value="Search"/>
+			</form>
 			
 			<c:if test="${not empty param.id}">
 				<form class="my-3 mx-auto text-center" action="Rename" method="post">
