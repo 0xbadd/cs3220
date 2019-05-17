@@ -87,13 +87,13 @@ public class RegistrationController extends HttpServlet {
 				
 				if (rs.next()) {
 					userid = rs.getInt("id");
-					userRoot = username;
+					userRoot = "/" + username;
 				}
 
 				sql = "INSERT INTO folders (userid, foldername) values (?, ?)";
 				ps = c.prepareStatement(sql);
 				ps.setInt(1, userid);
-				ps.setString(2, "/" + username);
+				ps.setString(2, userRoot);
 				ps.executeUpdate();
 			}
 		} catch (SQLException e) {

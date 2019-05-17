@@ -22,7 +22,9 @@ public class FileListController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int userid = (int) request.getSession().getAttribute("userid");
 		String folderPath = (String) request.getSession().getAttribute("folderpath");
+		String currentFolder = (String) request.getSession().getAttribute("currentFolder");
 		Map<Integer, FileEntryBean> files = new LinkedHashMap<>();
+		Map<Integer, FolderEntryBean> folders = new LinkedHashMap<>();
 		Connection c = null;
 		
 		try {
@@ -51,6 +53,21 @@ public class FileListController extends HttpServlet {
 					files.put(rs.getInt("id"), file);
 				}
 			}
+
+			sql = "SELECT * FROM folders WHERE userid=? AND parentname=?";
+			ps = c.prepareStatement(sql);
+			ps.setInt(1, userid);
+			ps.setString(2, currentFolder);
+			rs = ps.executeQuery();
+			
+			while (rs.next()) {
+				FolderEntryBean folder = new FolderEntryBean(
+						rs.getInt("userid"),
+						rs.getString("foldername"),
+						rs.getString("parentname")
+				);
+				folders.put(rs.getInt("id"), folder);
+			}
 		} catch (SQLException e) {
 			throw new ServletException(e);
 		} finally {
@@ -64,6 +81,7 @@ public class FileListController extends HttpServlet {
 		}
 
 		request.getSession().setAttribute("files", files);
+		request.getSession().setAttribute("folders", folders);
 		request.getRequestDispatcher("/WEB-INF/cloudDrive/FileListView.jsp").forward(request, response);
 	}
 
