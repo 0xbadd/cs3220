@@ -8,12 +8,10 @@ CREATE TABLE `users` (
   `password` varchar(60) NOT NULL
 ) ENGINE='InnoDB';
 
-INSERT INTO `users` (`username`, `email`, `password`)
-VALUES ('albert', 'acervan5@calstatela.edu', '$2a$10$lNCwo/6d6lyonT8S7KCpt.7xKpvj6aSGaqjm/fF/0w/ieLra/idOu');
-
 CREATE TABLE `files` (
   `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `filename` varchar(255) NOT NULL,
   `filepath` varchar(255) NOT NULL,
-  `userid` int NOT NULL
+  `userid` int NOT NULL,
+  `folderpath` varchar(255) NOT NULL
 ) ENGINE='InnoDB';
