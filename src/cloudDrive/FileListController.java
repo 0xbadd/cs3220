@@ -20,8 +20,9 @@ public class FileListController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Map<Integer, FileEntryBean> files = new LinkedHashMap<>();
 		int userid = (int) request.getSession().getAttribute("userid");
+		String folderpath = (String) request.getSession().getAttribute("currentFolder");
+		Map<Integer, FileEntryBean> files = new LinkedHashMap<>();
 		Connection c = null;
 		
 		try {
@@ -30,9 +31,10 @@ public class FileListController extends HttpServlet {
 			String dbPassword = "M**XK2EH";
 			
 			c = DriverManager.getConnection(url, dbUsername, dbPassword);
-			String sql = "SELECT * FROM files WHERE userid=?";
+			String sql = "SELECT * FROM files WHERE userid=? AND folderpath=?";
 			PreparedStatement ps = c.prepareStatement(sql);
 			ps.setInt(1, userid);
+			ps.setString(2, folderpath);
 			ResultSet rs = ps.executeQuery();
 			
 			while (rs.next()) {
@@ -43,7 +45,8 @@ public class FileListController extends HttpServlet {
 					FileEntryBean file = new FileEntryBean(
 							rs.getString("filename"),
 							rs.getString("filepath"),
-							rs.getInt("userid")
+							rs.getInt("userid"),
+							rs.getString("folderpath")
 					);
 					files.put(rs.getInt("id"), file);
 				}
