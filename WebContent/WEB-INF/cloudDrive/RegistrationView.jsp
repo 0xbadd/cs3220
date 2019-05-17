@@ -47,11 +47,11 @@
 				</div>
 				<div class="form-group">
 					<label for="password">Password</label>
-					<input class="form-control" id="password" name="password">
+					<input class="form-control" type="password" id="password" name="password">
 				</div>
 				<div class="form-group">
 					<label for="password2">Repeat password</label>
-					<input class="form-control" id="passwordRepeat" name="passwordRepeat">
+					<input class="form-control" type="password" id="passwordRepeat" name="passwordRepeat">
 				</div>
 				<input class="btn btn-primary" type="submit" name="submitBtn" value="Register">
 			</form>
