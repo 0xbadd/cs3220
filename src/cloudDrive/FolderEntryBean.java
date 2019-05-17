@@ -3,12 +3,13 @@ package cloudDrive;
 public class FolderEntryBean {
 	private int userid;
 	private String foldername;
-	private String parentname;
+	private String parentpath;
+	private int parentid;
 
-	public FolderEntryBean(int userid, String foldername, String parentname) {
+	public FolderEntryBean(int userid, String foldername, String parentpath, int parentid) {
 		this.userid = userid;
 		this.foldername = foldername;
-		this.parentname = parentname;
+		this.parentid = parentid;
 	}
 
 	public int getUserid() {
@@ -19,7 +20,11 @@ public class FolderEntryBean {
 		return foldername;
 	}
 
-	public String getParentname() {
-		return parentname;
+	public String getParentpath() {
+		return parentpath;
+	}
+
+	public int getParentid() {
+		return parentid;
 	}
 }

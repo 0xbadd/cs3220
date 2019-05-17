@@ -54,17 +54,20 @@ public class FileListController extends HttpServlet {
 				}
 			}
 
-			sql = "SELECT * FROM folders WHERE userid=? AND parentname=?";
+			String parentPath = folderPath.substring(0, folderPath.length() - currentFolder.length());
+			
+			sql = "SELECT * FROM folders WHERE userid=? AND parentpath=?";
 			ps = c.prepareStatement(sql);
 			ps.setInt(1, userid);
-			ps.setString(2, currentFolder);
+			ps.setString(2, parentPath);
 			rs = ps.executeQuery();
 			
 			while (rs.next()) {
 				FolderEntryBean folder = new FolderEntryBean(
 						rs.getInt("userid"),
 						rs.getString("foldername"),
-						rs.getString("parentname")
+						rs.getString("parentpath"),
+						rs.getInt("parentid")
 				);
 				folders.put(rs.getInt("id"), folder);
 			}
