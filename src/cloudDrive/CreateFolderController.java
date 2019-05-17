@@ -29,8 +29,9 @@ public class CreateFolderController extends HttpServlet {
 			request.getSession().setAttribute("error", "folder");
 		} else {
 			folderName = "/" + folderName;
+			String folderpath = parentpath + folderName;
 			request.getSession().setAttribute("currentFolder", folderName);
-			request.getSession().setAttribute("folderpath", parentpath + folderName);
+			request.getSession().setAttribute("folderpath", folderpath);
 
 			Connection c = null;
 			try {

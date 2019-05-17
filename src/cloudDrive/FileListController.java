@@ -22,7 +22,6 @@ public class FileListController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int userid = (int) request.getSession().getAttribute("userid");
 		String folderPath = (String) request.getSession().getAttribute("folderpath");
-		String currentFolder = (String) request.getSession().getAttribute("currentFolder");
 		Map<Integer, FileEntryBean> files = new LinkedHashMap<>();
 		Map<Integer, FolderEntryBean> folders = new LinkedHashMap<>();
 		Connection c = null;
@@ -54,12 +53,10 @@ public class FileListController extends HttpServlet {
 				}
 			}
 
-			String parentPath = folderPath.substring(0, folderPath.length() - currentFolder.length());
-			
 			sql = "SELECT * FROM folders WHERE userid=? AND parentpath=?";
 			ps = c.prepareStatement(sql);
 			ps.setInt(1, userid);
-			ps.setString(2, parentPath);
+			ps.setString(2, folderPath);
 			rs = ps.executeQuery();
 			
 			while (rs.next()) {
