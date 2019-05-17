@@ -59,9 +59,17 @@
 				</form>
 			</c:if>
 			
-			<c:if test="${currentFolder != userRoot}">
+			<c:if test="${not empty files or currentFolder != userRoot}">
 			    <div class="my-3 mx-auto text-center">
-			        Folders: <a class="btn btn-primary" href="ChangeFolder?back=1">...</a>
+			        Folders: 
+			        <c:if test="${currentFolder != userRoot}">
+			            <a class="btn btn-primary" href="ChangeFolder?id=folder.value.parentid">...</a>
+			        </c:if>
+			        <c:if test="${not empty files}">
+			            <c:forEach var="folder" items="${folders}">
+			                <a class="btn btn-primary" href="ChangeFolder?id=folder.key">...</a>
+			            </c:forEach>
+			        </c:if>
 			    </div>
 			</c:if>
 			
