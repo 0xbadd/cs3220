@@ -81,7 +81,7 @@
 			<c:if test="${not empty share}">
 			     <div class="my-3 mx-auto text-center">
 			         <h3>
-			             Share Link: ${sharelink}
+			             Share Link: <code>${sharelink}</code>
 			         </h3>
 			     </div>
 			     <c:set var="share" scope="session" value=""/>
