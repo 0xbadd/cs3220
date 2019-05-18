@@ -32,6 +32,9 @@
 			           <c:if test="${error == 'folder'}">
 					       <code>Invalid folder name.</code>
 			           </c:if>
+			           <c:if test="${error == 'duplicatefolder'}">
+					       <code>A folder with this name already exists.</code>
+			           </c:if>
 				   </div>
 			   </div>
 			   <c:set var="error" scope="session" value=""/>
