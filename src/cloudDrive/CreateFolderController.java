@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.servlet.ServletException;
@@ -30,7 +31,6 @@ public class CreateFolderController extends HttpServlet {
 		} else {
 			folderName = "/" + folderName;
 			String folderpath = parentpath + folderName;
-			request.getSession().setAttribute("folderpath", folderpath);
 
 			Connection c = null;
 			try {
@@ -40,12 +40,25 @@ public class CreateFolderController extends HttpServlet {
 				
 				c = DriverManager.getConnection(url, dbUsername, dbPassword);
 
-				String sql = "INSERT INTO folders (userid, foldername, parentpath) values (?, ?, ?)";
+				String sql = "SELECT * FROM folders WHERE userid=? AND parentpath=? AND foldername=?";
 				PreparedStatement ps = c.prepareStatement(sql);
 				ps.setInt(1, userid);
-				ps.setString(2, folderName);
-				ps.setString(3, parentpath);
-				ps.executeUpdate();
+				ps.setString(2, parentpath);
+				ps.setString(3, folderName);
+				ResultSet rs = ps.executeQuery();
+				
+				if (rs.next()) {
+					request.getSession().setAttribute("error", "duplicatefolder");
+				} else {
+					sql = "INSERT INTO folders (userid, foldername, parentpath) values (?, ?, ?)";
+					ps = c.prepareStatement(sql);
+					ps.setInt(1, userid);
+					ps.setString(2, folderName);
+					ps.setString(3, parentpath);
+					ps.executeUpdate();
+
+					request.getSession().setAttribute("folderpath", folderpath);
+				}
 			} catch (SQLException e) {
 				throw new ServletException(e);
 			} finally {

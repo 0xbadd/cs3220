@@ -39,7 +39,7 @@
 				</div>
 				<div class="form-group">
 					<label for="password">Password</label>
-					<input class="form-control" id="password" name="password">
+					<input class="form-control" type="password" id="password" name="password">
 				</div>
 				<input class="btn btn-primary" type="submit" name="submitBtn" value="Log-in">
 			</form>

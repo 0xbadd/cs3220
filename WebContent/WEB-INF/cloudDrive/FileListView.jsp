@@ -17,6 +17,9 @@
     </div>
     <div class="row mt-3">
         <div class="col">
+	        <p class="mx-auto text-center">
+	            <a href="Login">Logout</a>
+	        </p>
 			<c:if test="${not empty error}">
 			   <div class="card mx-auto my-3" style="width: 30rem;">
 				   <div class="card-header text-white bg-danger">
@@ -28,6 +31,9 @@
 			           </c:if>
 			           <c:if test="${error == 'folder'}">
 					       <code>Invalid folder name.</code>
+			           </c:if>
+			           <c:if test="${error == 'duplicatefolder'}">
+					       <code>A folder with this name already exists.</code>
 			           </c:if>
 				   </div>
 			   </div>
@@ -75,7 +81,7 @@
 			<c:if test="${not empty share}">
 			     <div class="my-3 mx-auto text-center">
 			         <h3>
-			             Share Link: ${sharelink}
+			             Share Link: <code>${sharelink}</code>
 			         </h3>
 			     </div>
 			     <c:set var="share" scope="session" value=""/>

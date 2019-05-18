@@ -30,6 +30,15 @@
 				   <c:if test="${error == 'email'}">
 					   There is already an account under this email.
 				   </c:if>
+				   <c:if test="${error == 'badusername'}">
+					   Usernames can not contain special characters or spaces.
+				   </c:if>
+				   <c:if test="${error == 'bademail'}">
+					   Not a valid email address.
+				   </c:if>
+				   <c:if test="${error == 'emptyfields'}">
+					   All fields must be filled in.
+				   </c:if>
 			   </code>
 		   </div>
 	   </div>
@@ -47,15 +56,24 @@
 				</div>
 				<div class="form-group">
 					<label for="password">Password</label>
-					<input class="form-control" id="password" name="password">
+					<input class="form-control" type="password" id="password" name="password">
 				</div>
 				<div class="form-group">
 					<label for="password2">Repeat password</label>
-					<input class="form-control" id="passwordRepeat" name="passwordRepeat">
+					<input class="form-control" type="password" id="passwordRepeat" name="passwordRepeat">
 				</div>
 				<input class="btn btn-primary" type="submit" name="submitBtn" value="Register">
 			</form>
 		</div>
+	</div>
+	<hr class="my-4" style="width: 40rem;">
+	<div class="row mt-3">
+	    <div class="col">
+	        <p class="mx-auto" style="width: 30rem;">
+	            Already have an account?
+	            <a href="Login">Login</a>
+	        </p>
+	    </div>
 	</div>
 </div>
 </body>

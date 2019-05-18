@@ -36,12 +36,27 @@ public class RegistrationController extends HttpServlet {
 		request.getSession().setAttribute("error", null);
 		
 		if (!password.equals(passwordRepeat)) {
-			isValid = false;
 			request.getSession().setAttribute("error", "password");
+			doGet(request, response);
+			return;
 		}
 		
 		if (username == "" || email == "" || password == "") {
-			isValid = false;
+			request.getSession().setAttribute("error", "emptyfields");
+			doGet(request, response);
+			return;
+		}
+		
+		if (username.matches(".*[^\\w-.].*")) {
+			request.getSession().setAttribute("error", "badusername");
+			doGet(request, response);
+			return;
+		}
+
+		if (email.matches(".*[^\\w-.@].*")) {
+			request.getSession().setAttribute("error", "bademail");
+			doGet(request, response);
+			return;
 		}
 		
 		try {
