@@ -17,6 +17,9 @@
     </div>
     <div class="row mt-3">
         <div class="col">
+	        <p class="mx-auto text-center">
+	            <a href="Login">Logout</a>
+	        </p>
 			<c:if test="${not empty error}">
 			   <div class="card mx-auto my-3" style="width: 30rem;">
 				   <div class="card-header text-white bg-danger">
