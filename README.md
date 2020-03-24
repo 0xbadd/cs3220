@@ -11,5 +11,6 @@ File operations:
 - Searching
 
 Other:
+- User login and registration
 - Password hashing
-- Folders
+- Creating and navigating folders
